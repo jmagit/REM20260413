@@ -26,7 +26,7 @@ Aprender cómo funciona Spring IoC y sus principales características dentro de 
 2. Configura:
     - Project: Maven Project
     - Language: Java
-    - Spring Boot: 3.3.x o superior
+    - Spring Boot: 4.x.x o superior
     - Group: `com.example`
     - Artifact: `spring-ioc-lab`
     - Name: `spring-ioc-lab`
