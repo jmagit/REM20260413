@@ -2,6 +2,7 @@ package com.example.ioc.implementaciones;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,12 @@ import com.example.ioc.contratos.ServicioCadenas;
 
 @Service
 //@Primary
-@Profile({"prod", "default"})
+//@Profile({"prod", "default"})
 public class ServicioCadenasImpl implements ServicioCadenas {
 	private final RepositorioCadenas dao;
 	private final NotificationService notify;
 
-	public ServicioCadenasImpl(RepositorioCadenas dao, NotificationService notify) {
+	public ServicioCadenasImpl(@Qualifier("prod") RepositorioCadenas dao, NotificationService notify) {
 		this.dao = dao;
 		this.notify = notify;
 		notify.add(getClass().getSimpleName() + " Constructor");

@@ -1,6 +1,7 @@
 package com.example.ioc.implementaciones;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -13,8 +14,9 @@ import com.example.ioc.contratos.Configuracion;
 import com.example.ioc.contratos.RepositorioCadenas;
 
 @Repository
-@Profile({"prod", "default"})
+//@Profile({"prod", "default"})
 //@Primary
+@Qualifier("prod")
 public class RepositorioCadenasImpl implements RepositorioCadenas {
 	private final Configuracion configuracion;
 	private final NotificationService notify;
