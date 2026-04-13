@@ -19,7 +19,7 @@ public class DemoApplication implements CommandLineRunner {
 		System.err.println("Aplicacion arrancada");
 	}
 
-	@Bean
+//	@Bean
 	CommandLineRunner nulos() {
 		return arg -> {
 			var dummy = new Dummy();
@@ -38,6 +38,11 @@ public class DemoApplication implements CommandLineRunner {
 			} catch (Exception e) {
 				System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
 			}
+		};
+	}
+	@Bean
+	CommandLineRunner demosIoC() {
+		return arg -> {
 		};
 	}
 }
