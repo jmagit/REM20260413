@@ -9,9 +9,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.example.aop.AuthenticationService;
+import com.example.aop.introductions.Visible;
 import com.example.ioc.GenericoEvent;
 import com.example.ioc.NotificationService;
 import com.example.ioc.Rango;
@@ -22,6 +25,7 @@ import com.example.ioc.notificaciones.Sender;
 import com.example.nulabilidad.Dummy;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class DemoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -40,11 +44,11 @@ public class DemoApplication implements CommandLineRunner {
 			String s = null;
 			try {
 				s = "algo";
-				if(s != null)
+				if (s != null)
 					dummy = new Dummy(s);
 //				IO.println(dummy.getCadena().toLowerCase());
 				dummy.setCadenaSegura(s);
-				if(dummy.getCadenaSegura().isPresent()) {
+				if (dummy.getCadenaSegura().isPresent()) {
 					IO.println(dummy.getCadenaSegura().get().toLowerCase());
 				} else {
 					IO.println("cadena vacia");
@@ -54,16 +58,16 @@ public class DemoApplication implements CommandLineRunner {
 			}
 		};
 	}
-	
-	@Autowired	
+
+	@Autowired
 	ServicioCadenas srv;
 	@Value("${info.app.description}")
 	String description;
-	@Autowired	
+	@Autowired
 	Rango rango;
-	
+
 //	@Bean
-	CommandLineRunner demosIoC(@Twit Sender send1, @Qualifier("correo") Sender send2, Map<String, Sender> lista, 
+	CommandLineRunner demosIoC(@Twit Sender send1, @Qualifier("correo") Sender send2, Map<String, Sender> lista,
 			ConstructorConValores x, ConstructorConValores y) {
 		return arg -> {
 //			var n = new NotificationServiceImpl();
@@ -79,7 +83,7 @@ public class DemoApplication implements CommandLineRunner {
 		};
 	}
 
-	@Bean
+//	@Bean
 	CommandLineRunner notificaciones(ServicioCadenas srv, NotificationService notify) {
 		return arg -> {
 			IO.println("Inicial -------------------");
@@ -93,7 +97,7 @@ public class DemoApplication implements CommandLineRunner {
 			notify.clear();
 		};
 	}
-	
+
 //	@Bean
 	CommandLineRunner configuracionEnXML() {
 		return _ -> {
@@ -116,18 +120,55 @@ public class DemoApplication implements CommandLineRunner {
 			}
 		};
 	}
-	
-	@EventListener
-	void eventHandler(GenericoEvent ev) {
-		System.err.println("Evento recibido: %s -> %s".formatted(ev.origen(), ev.carga()));
-	}
-	@EventListener
-	void otroEventHandler(GenericoEvent ev) {
-		System.err.println("Otro tratamiento: %s -> %s".formatted(ev.origen(), ev.carga()));
-	}
-	@EventListener
-	void eventRepository(String ev) {
-		System.err.println("Evento del repositorio: %s".formatted(ev));
+
+//	@EventListener
+//	void eventHandler(GenericoEvent ev) {
+//		System.err.println("Evento recibido: %s -> %s".formatted(ev.origen(), ev.carga()));
+//	}
+//	@EventListener
+//	void otroEventHandler(GenericoEvent ev) {
+//		System.err.println("Otro tratamiento: %s -> %s".formatted(ev.origen(), ev.carga()));
+//	}
+//	@EventListener
+//	void eventRepository(String ev) {
+//		System.err.println("Evento del repositorio: %s".formatted(ev));
+//	}
+
+	@Bean
+	CommandLineRunner aop(ServicioCadenas srv, NotificationService notify, AuthenticationService auth) {
+		return arg -> {
+			try {
+				IO.println(srv.getClass().getSimpleName());
+				IO.println("Inicial -------------------");
+//				notify.getListado().forEach(IO::println);
+				notify.clear();
+				IO.println("Sigo -------------------");
+				notify.add(srv.get(1));
+				notify.add(srv.get(2));
+				try {
+					srv.add("algo");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				auth.login();
+				srv.add("algo");
+				notify.getListado().forEach(IO::println);
+				notify.clear();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(srv instanceof Visible v) {
+				IO.println("Tiene interfaz Visible");
+				IO.println(v.isVisible() ? "Es visible" : "Invisible");
+				v.mostrar();
+				IO.println(v.isVisible() ? "Es visible" : "Invisible");
+				v.ocultar();
+				IO.println(v.isVisible() ? "Es visible" : "Invisible");
+			} else {
+				IO.println("No tiene interfaz Visible");
+			}
+		};
 	}
 
 }
