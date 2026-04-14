@@ -9,12 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.example.ioc.NotificationServiceImpl;
+import com.example.ioc.GenericoEvent;
+import com.example.ioc.NotificationService;
 import com.example.ioc.Rango;
+import com.example.ioc.anotaciones.Twit;
 import com.example.ioc.contratos.ServicioCadenas;
-import com.example.ioc.implementaciones.RepositorioCadenasImpl;
-import com.example.ioc.implementaciones.ServicioCadenasImpl;
 import com.example.ioc.notificaciones.ConstructorConValores;
 import com.example.ioc.notificaciones.Sender;
 import com.example.nulabilidad.Dummy;
@@ -60,8 +62,8 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired	
 	Rango rango;
 	
-	@Bean
-	CommandLineRunner demosIoC(@Qualifier("twit") Sender send1, @Qualifier("correo") Sender send2, Map<String, Sender> lista, 
+//	@Bean
+	CommandLineRunner demosIoC(@Twit Sender send1, @Qualifier("correo") Sender send2, Map<String, Sender> lista, 
 			ConstructorConValores x, ConstructorConValores y) {
 		return arg -> {
 //			var n = new NotificationServiceImpl();
@@ -76,4 +78,56 @@ public class DemoApplication implements CommandLineRunner {
 			IO.println(rango.toString());
 		};
 	}
+
+	@Bean
+	CommandLineRunner notificaciones(ServicioCadenas srv, NotificationService notify) {
+		return arg -> {
+			IO.println("Inicial -------------------");
+//			notify.getListado().forEach(IO::println);
+			notify.clear();
+			IO.println("Sigo -------------------");
+			notify.add(srv.get(1));
+			notify.add(srv.get(2));
+			srv.add("algo");
+//			notify.getListado().forEach(IO::println);
+			notify.clear();
+		};
+	}
+	
+//	@Bean
+	CommandLineRunner configuracionEnXML() {
+		return _ -> {
+			try (var contexto = new FileSystemXmlApplicationContext("applicationContext.xml")) {
+				var notify = contexto.getBean(NotificationService.class);
+				System.out.println("configuracionEnXML ===================>");
+				var srv = (ServicioCadenas) contexto.getBean("servicioCadenas");
+				System.out.println(srv.getClass().getName());
+				contexto.getBean(NotificationService.class).getListado().forEach(System.out::println);
+				System.out.println("===================>");
+				srv.get().forEach(notify::add);
+				srv.add("Hola mundo");
+				notify.add(srv.get(1));
+				srv.modify("modificado");
+				System.out.println("===================>");
+				notify.getListado().forEach(System.out::println);
+				notify.clear();
+				System.out.println("<===================");
+				((Sender) contexto.getBean("sender")).send("Hola mundo");
+			}
+		};
+	}
+	
+	@EventListener
+	void eventHandler(GenericoEvent ev) {
+		System.err.println("Evento recibido: %s -> %s".formatted(ev.origen(), ev.carga()));
+	}
+	@EventListener
+	void otroEventHandler(GenericoEvent ev) {
+		System.err.println("Otro tratamiento: %s -> %s".formatted(ev.origen(), ev.carga()));
+	}
+	@EventListener
+	void eventRepository(String ev) {
+		System.err.println("Evento del repositorio: %s".formatted(ev));
+	}
+
 }

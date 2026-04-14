@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.example.ioc.NotificationService;
@@ -54,6 +55,10 @@ public class ServicioCadenasImpl implements ServicioCadenas {
 	@Override
 	public void remove(Integer id) {
 		dao.save(id.toString());
+	}
+	@EventListener
+	void eventRepository(String ev) {
+		System.err.println("Soy el servicio: %s".formatted(ev));
 	}
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.ioc.anotaciones.Twit;
 import com.example.ioc.notificaciones.ConstructorConValores;
 import com.example.ioc.notificaciones.EMailSender;
 import com.example.ioc.notificaciones.Sender;
@@ -17,7 +18,8 @@ public class AppConfig {
 //		return new ConstructorConValores(1, "yo", notify);
 //	}
 	@Bean
-	@Qualifier("twit")
+//	@Qualifier("tweet")
+	@Twit
 	Sender twitea() {
 		return new TwitterSender();
 	}

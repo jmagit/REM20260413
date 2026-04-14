@@ -3,7 +3,7 @@ package com.example.ioc;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public interface NotificationService {
 
