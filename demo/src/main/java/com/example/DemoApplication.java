@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,13 +11,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.event.EventListener;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import com.example.aop.AuthenticationService;
+import com.example.aop.DummyAsync;
 import com.example.aop.introductions.Visible;
 import com.example.ioc.ConstructorConValores;
-import com.example.ioc.GenericoEvent;
 import com.example.ioc.NotificationService;
 import com.example.ioc.Rango;
 import com.example.ioc.anotaciones.Twit;
@@ -26,6 +29,8 @@ import com.example.nulabilidad.Dummy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
+@EnableScheduling
+@EnableAsync
 public class DemoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -134,7 +139,7 @@ public class DemoApplication implements CommandLineRunner {
 //		System.err.println("Evento del repositorio: %s".formatted(ev));
 //	}
 
-	@Bean
+//	@Bean
 	CommandLineRunner aop(ServicioCadenas srv, NotificationService notify, AuthenticationService auth) {
 		return arg -> {
 			try {
@@ -158,7 +163,7 @@ public class DemoApplication implements CommandLineRunner {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if(srv instanceof Visible v) {
+			if (srv instanceof Visible v) {
 				IO.println("Tiene interfaz Visible");
 				IO.println(v.isVisible() ? "Es visible" : "Invisible");
 				v.mostrar();
@@ -169,6 +174,36 @@ public class DemoApplication implements CommandLineRunner {
 				IO.println("No tiene interfaz Visible");
 			}
 		};
+	}
+
+	@Autowired
+	NotificationService notify;
+
+	@Bean
+	CommandLineRunner asincrono(DummyAsync dummy) {
+		return arg -> {
+			var obj = dummy; // new DummyAsync();
+			System.err.println(obj.getClass().getCanonicalName());
+//			obj.ejecutarAutoInvocado(1);
+//			obj.ejecutarAutoInvocado(2);
+			obj.ejecutarTareaSimpleAsync(1);
+			obj.ejecutarTareaSimpleAsync(2);
+			obj.calcularResultadoAsync(10, 20, 30, 40, 50).thenAccept(result -> notify.add(result));
+			obj.calcularResultadoAsync(1, 2, 3).thenAccept(result -> notify.add(result));
+			obj.calcularResultadoAsync().thenAccept(result -> notify.add(result));
+			System.err.println("Termino de mandar hacer las cosas");
+		};
+	}
+
+	@Scheduled(timeUnit = TimeUnit.SECONDS, fixedRate = 5, initialDelay = 2)
+	void periodico() {
+//		System.out.println("Han pasado 5 segundos");
+		if (notify.hasMessages()) {
+			System.out.println("@Scheduled -------------------------------->");
+			notify.getListado().forEach(System.out::println);
+			notify.clear();
+			System.out.println("<--------------------------------");
+		}
 	}
 
 }
