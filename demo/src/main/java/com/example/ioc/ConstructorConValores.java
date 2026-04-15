@@ -1,4 +1,4 @@
-package com.example.ioc.notificaciones;
+package com.example.ioc;
 
 import java.beans.ConstructorProperties;
 import java.util.Optional;
@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.example.ioc.NotificationService;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

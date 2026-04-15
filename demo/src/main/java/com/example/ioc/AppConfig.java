@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.ioc.anotaciones.Twit;
-import com.example.ioc.notificaciones.ConstructorConValores;
 import com.example.ioc.notificaciones.EMailSender;
 import com.example.ioc.notificaciones.Sender;
 import com.example.ioc.notificaciones.TwitterSender;
