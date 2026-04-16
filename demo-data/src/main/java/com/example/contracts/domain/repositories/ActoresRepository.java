@@ -9,12 +9,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Meta;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.example.domain.entities.Actor;
 import com.example.domain.entities.models.ActorDTO;
 import com.example.domain.entities.models.ActorShort;
 
 public interface ActoresRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor> {
+	@RestResource(path = "empieza-por-nombre")
 	List<Actor> findTop5ByFirstNameStartingWithIgnoreCaseOrderByLastNameDesc(String prefijo);
 	List<Actor> findTop5ByFirstNameStartingWithIgnoreCase(String prefijo, Sort orderBy);
 	
@@ -29,5 +31,10 @@ public interface ActoresRepository extends JpaRepository<Actor, Integer>, JpaSpe
 	List<ActorDTO> readByActorIdGreaterThanEqual(int primero);
 	List<ActorShort> queryByActorIdGreaterThanEqual(int primero);
 	
+	@RestResource(exported = false)
 	<T> List<T> findByActorIdGreaterThanEqual(int primero, Class<T> type);
+	
+	@Override
+	@RestResource(exported = false)
+	void deleteById(Integer id);
 }
