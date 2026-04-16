@@ -24,15 +24,18 @@ public class DemoDataApplication {
 	@Bean
 	CommandLineRunner ejemplos(EjemplosDatos demos) {
 		return arg -> {
+			try {
 //			demos.actores();
-			demos.consultas();
+//			demos.consultas();
 //			demos.relaciones();
-//			try {
 //				demos.transaccion();
 ////				demos.transaccionMala();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
+//				demos.validaciones();
+//				demos.proyecciones();
+				demos.serializacion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		};
 	}
 

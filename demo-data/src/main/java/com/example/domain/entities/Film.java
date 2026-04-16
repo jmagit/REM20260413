@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 
 /**
  * The persistent class for the film database table.
@@ -14,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name="film")
 @NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
+@JsonIncludeProperties({"filmId", "title"})
 public class Film implements Serializable {
 	private static final long serialVersionUID = 1L;
 
