@@ -37,8 +37,6 @@ class ActorsRepositoryMemoryTest {
 
 	@Nested
 	class Con_datos {
-		@Autowired
-		private TestEntityManager em;
 
 		@BeforeEach
 		void setUp() throws Exception {

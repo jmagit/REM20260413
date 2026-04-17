@@ -75,7 +75,7 @@ class ActorsResourceTest {
 		        		new ActorDTO(3, "Capitan", "Tan")));
 
 		when(srv.getByProjection(Sort.by("firstName", "lastName"), ActorDTO.class)).thenReturn(lista);
-		mockMvc.perform(get("/actores/v1").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/actores/v1?modo=largo").accept(MediaType.APPLICATION_JSON))
 			.andExpectAll(
 					status().isOk(), 
 					content().contentType("application/json"),
