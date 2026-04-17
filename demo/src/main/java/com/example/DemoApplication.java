@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.example.aop.AuthenticationService;
 import com.example.aop.DummyAsync;
 import com.example.aop.introductions.Visible;
+import com.example.contracts.application.services.MessagingService;
 import com.example.ioc.ConstructorConValores;
 import com.example.ioc.NotificationService;
 import com.example.ioc.Rango;
@@ -26,6 +27,8 @@ import com.example.ioc.anotaciones.Twit;
 import com.example.ioc.contratos.ServicioCadenas;
 import com.example.ioc.notificaciones.Sender;
 import com.example.nulabilidad.Dummy;
+
+import jakarta.annotation.PreDestroy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
@@ -179,7 +182,7 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	NotificationService notify;
 
-	@Bean
+//	@Bean
 	CommandLineRunner asincrono(DummyAsync dummy) {
 		return arg -> {
 			var obj = dummy; // new DummyAsync();
@@ -204,6 +207,36 @@ public class DemoApplication implements CommandLineRunner {
 			notify.clear();
 			System.out.println("<--------------------------------");
 		}
+	}
+
+	@Autowired
+	MessagingService mensajeria;
+
+	@Bean
+	CommandLineRunner demosCorreos() {
+		return _ -> {
+			mensajeria.sendEmailAsync("admin@example.com", "Aplicacion Init", "La aplicacion se ha iniciado");
+			mensajeria.sendWelcomeEmailAsync("pgrillo@example.com", "Pepito Grillo");
+		};
+	}
+
+	@PreDestroy
+	void despidete() {
+		var body = """
+				<!DOCTYPE html>
+				<html lang="es">
+				<head>
+				    <meta charset="UTF-8">
+				    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+				    <title>Servicio</title>
+				</head>
+				<body>
+				    <h1>%s</h1>
+				    <p>%s</p>
+				</body>
+				</html>
+				""".formatted("Aplicacion Close", "La aplicacion se ha cerrado");
+		mensajeria.sendMimeEmail("pgrillo@example.com", "Aplicacion Close", body, true);
 	}
 
 }
