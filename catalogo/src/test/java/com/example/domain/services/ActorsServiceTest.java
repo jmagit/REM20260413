@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
@@ -31,7 +32,7 @@ import com.example.tests.core.UnitTest;
 @Sql(scripts = {"classpath:catalogo_schema.sql"})
 @UnitTest
 //@ContextConfiguration(classes = ActorServiceTest.IoCTestConfig.class)
-//@ComponentScan(basePackages = {"com.example"})
+@ComponentScan(basePackages = {"com.example.infraestructure.repositories"})
 class ActorsServiceTest {
 //	public static class IoCTestConfig {
 //		@Bean

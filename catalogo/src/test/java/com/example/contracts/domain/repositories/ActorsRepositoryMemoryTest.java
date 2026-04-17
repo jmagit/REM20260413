@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -18,6 +19,7 @@ import com.example.tests.core.UnitTest;
 @DataJpaTest
 @Sql(scripts = {"classpath:catalogo_schema.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 @UnitTest
+@ComponentScan(basePackages = {"com.example.infraestructure.repositories"})
 class ActorsRepositoryMemoryTest {
 	@Autowired
 	private TestEntityManager em;
