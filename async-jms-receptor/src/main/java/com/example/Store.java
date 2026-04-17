@@ -13,10 +13,16 @@ public class Store {
 	public static List<Message> getQueue() {
 		return queue;
 	}
+	public static void clearQueue() {
+		queue.clear();
+	}
 	public static void addTopic(Message msg) {
 		topic.add(msg);
 	}
 	public static List<Message> getTopic() {
 		return topic;
+	}
+	public static void clearTopic() {
+		topic.clear();
 	}
 }
