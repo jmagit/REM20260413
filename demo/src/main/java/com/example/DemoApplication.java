@@ -217,6 +217,7 @@ public class DemoApplication implements CommandLineRunner {
 		return _ -> {
 			mensajeria.sendEmailAsync("admin@example.com", "Aplicacion Init", "La aplicacion se ha iniciado");
 			mensajeria.sendWelcomeEmailAsync("pgrillo@example.com", "Pepito Grillo");
+//			despidete();
 		};
 	}
 
@@ -236,7 +237,7 @@ public class DemoApplication implements CommandLineRunner {
 				</body>
 				</html>
 				""".formatted("Aplicacion Close", "La aplicacion se ha cerrado");
-		mensajeria.sendMimeEmail("pgrillo@example.com", "Aplicacion Close", body, true);
+		mensajeria.sendMimeEmail("admin@example.com", "Aplicacion Close", body, true);
 	}
 
 }

@@ -20,6 +20,12 @@ public class RecibidosResource {
 	public void listenQueue(MessageDTO in) {
 		Store.addQueue(new Message(in));
 		log.warn("MENSAJE RECIBIDO: " + in);
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	@Tag(name = "Queues")
