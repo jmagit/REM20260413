@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 @Slf4j
 @RestController
