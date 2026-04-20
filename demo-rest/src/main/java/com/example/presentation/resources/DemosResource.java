@@ -2,22 +2,29 @@ package com.example.presentation.resources;
 
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.example.core.contracts.domain.exceptions.BadRequestException;
 import com.example.core.contracts.domain.exceptions.InvalidDataException;
 import com.example.core.contracts.domain.exceptions.NotFoundException;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
@@ -113,4 +120,22 @@ public class DemosResource {
 			return Map.of("codigo", code);
 		}
 	}
+	
+	record Tupla(int key, String value) {}
+	
+	@GetMapping(path = "/etag/{id}")
+	public ResponseEntity<Tupla> getOne(@PathVariable int id) throws NotFoundException {
+		var dto = new Tupla(id, "Ejemplo");
+		return ResponseEntity.ok().eTag(ETagTools.generate(dto)).body(dto);
+	}
+	
+	@PutMapping(path = "/etag/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@PathVariable int id, @Valid @RequestBody Tupla item, @RequestHeader(value = HttpHeaders.IF_MATCH, required = true) String ifMatch)
+			throws NotFoundException, InvalidDataException, BadRequestException {
+		var dto = new Tupla(id, "Ejemplo");
+		if(!ETagTools.ifMatch(dto, ifMatch))
+			throw new ResponseStatusException(HttpStatusCode.valueOf(412));
+	}
+	
 }
