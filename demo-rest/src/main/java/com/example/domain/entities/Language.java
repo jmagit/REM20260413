@@ -1,9 +1,21 @@
 package com.example.domain.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import com.example.core.domain.entities.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -13,44 +25,65 @@ import java.util.List;
 @Entity
 @Table(name="language")
 @NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
-public class Language implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Language extends AbstractEntity<Language> implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    public static class Partial {}
+    public static class Complete extends Partial {}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="language_id", unique=true, nullable=false)
-	private int languageId;
+	@Column(name="language_id")
+	@JsonView(Language.Partial.class)
+	private int id;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
-	private Timestamp lastUpdate;
-
-	@Column(nullable=false, length=20)
+	@NotBlank
+	@Size(max=20)
+	@JsonProperty("idioma")
+	@JsonView(Language.Partial.class)
 	private String name;
+
+	@Column(name="last_update", insertable = false, updatable = false)
+	@JsonView(Language.Complete.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+	@JsonProperty("ultimaModificacion")
+	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="language")
+	@JsonIgnore
 	private List<Film> films;
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="languageVO")
+	@JsonIgnore
 	private List<Film> filmsVO;
 
 	public Language() {
 	}
 
-	public int getLanguageId() {
-		return this.languageId;
+	public Language(int id) {
+		this.id = id;
 	}
 
-	public void setLanguageId(int languageId) {
-		this.languageId = languageId;
+	public Language(int id, @NotBlank @Size(max = 20) String name) {
+		this.id = id;
+		this.name = name;
 	}
 
-	public Timestamp getLastUpdate() {
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
@@ -63,7 +96,7 @@ public class Language implements Serializable {
 	}
 
 	public List<Film> getFilms() {
-		return this.films;
+		return Collections.unmodifiableList(this.films);
 	}
 
 	public void setFilms(List<Film> films) {
@@ -104,6 +137,26 @@ public class Language implements Serializable {
 		filmsVO.setLanguageVO(null);
 
 		return filmsVO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj instanceof Language o)
+			return id == o.id;
+		else
+			return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Language [id=" + id + ", name=" + name + "]";
 	}
 
 }
