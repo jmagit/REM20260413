@@ -18,8 +18,11 @@ import com.example.core.contracts.domain.exceptions.InvalidDataException;
 import com.example.core.contracts.domain.exceptions.NotFoundException;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import lombok.extern.slf4j.Slf4j;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+@Slf4j
 @RestController
 @RequestMapping("/demos")
 public class DemosResource {
@@ -97,11 +100,11 @@ public class DemosResource {
 	@GetMapping("/sin-contenido")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void sinContenido() {
-		
+		log.warn("petición sin contenido");
 	}
 
-	@GetMapping("/estados/{code}")
-	public Map<String, Integer> status(@PathVariable int code) {
+	@GetMapping("/estados/{code}")	
+	public @JacksonXmlElementWrapper(localName = "raiz", useWrapping = true) Map<String, Integer> status(@PathVariable int code) {
 		switch (code) {
 		case 400: 
 			throw new InvalidDataException("Datos invalidos");

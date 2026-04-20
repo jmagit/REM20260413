@@ -2,8 +2,6 @@ package com.example;
 
 import java.util.TreeMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -30,7 +28,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @EnableSpringDataWebSupport(pageSerializationMode = PageSerializationMode.VIA_DTO)
 @EnableAspectJAutoProxy
 @SpringBootApplication
@@ -47,8 +47,6 @@ import jakarta.transaction.Transactional;
 @SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @EnableFeignClients
 public class CatalogoApplication implements CommandLineRunner {
-	private final Log log = LogFactory.getLog(getClass().getSimpleName());
-
 	public static void main(String[] args) {
 		SpringApplication.run(CatalogoApplication.class, args);
 	}

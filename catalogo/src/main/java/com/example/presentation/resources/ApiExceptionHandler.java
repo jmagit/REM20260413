@@ -6,8 +6,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -29,10 +27,11 @@ import com.example.core.contracts.domain.exceptions.NotFoundException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice
 public class ApiExceptionHandler {
-	private final Log log = LogFactory.getLog(getClass().getName());
-
 	// https://datatracker.ietf.org/doc/html/rfc7807
 	// Content-Type: application/problem+json
 	@JsonInclude(value = Include.NON_EMPTY)
