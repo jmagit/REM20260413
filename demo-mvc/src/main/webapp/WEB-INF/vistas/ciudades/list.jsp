@@ -5,7 +5,7 @@
 <table class="table table-hover table-striped table-bordered">
 	<tr>
 		<th>Ciudades</th>
-		<th>Paises</th>
+		<th>Países</th>
 		<td class="text-end"><a class="btn btn-primary" href="/ciudades/add"><i class="fas fa-plus"></i></a></td>
 	</tr>
 	<c:forEach var="elemento" items="${listado.getContent()}">

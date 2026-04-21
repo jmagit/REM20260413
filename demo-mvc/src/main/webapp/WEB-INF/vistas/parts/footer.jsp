@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <c:set var="now" value="<%=new java.util.Date()%>" />
 
-	</div>
+	</main>
 	<footer class="footer mt-auto py-3">
 	  <hr>
 	  <div class="container">

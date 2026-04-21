@@ -55,4 +55,4 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-fluid">
+	<main class="container-fluid">

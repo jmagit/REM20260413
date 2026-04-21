@@ -19,7 +19,7 @@
 		<sf:errors path="city" cssClass="invalid-feedback" />
 	</div>
 	<div class="mb-3">
-		<sf:label path="countryId" cssClass="form-label">Paï¿½s</sf:label>
+		<sf:label path="countryId" cssClass="form-label">País</sf:label>
 		<sf:select path="countryId" cssClass="form-control" cssErrorClass="is-invalid form-control">
 			<sf:options items="${paises}" itemValue="countryId" itemLabel="country"/>
 		</sf:select>

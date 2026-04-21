@@ -7,7 +7,7 @@
 	<dd>${elemento.cityId}</dd>
 	<dt>Nombre</dt>
 	<dd>${elemento.city}</dd>
-	<dt>Paï¿½ï¿½s</dt>
+	<dt>País</dt>
 	<dd>${elemento.country.country}</dd>
 </dl>
 <p>
