@@ -1,8 +1,12 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+
 	</div>
 	<footer class="footer mt-auto py-3">
 	  <hr>
 	  <div class="container">
-	    <span class="text-muted">&copy; Todos los derechos reservados.</span>
+	    <span class="text-muted">&copy; <fmt:formatDate value="${now}" pattern="yyyy" /> Todos los derechos reservados.</span>
 	  </div>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

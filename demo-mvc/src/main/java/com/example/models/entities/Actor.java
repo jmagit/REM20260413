@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -37,10 +37,9 @@ public class Actor implements Serializable {
 	@Size(min=2, max=45)
 	private String lastName;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	@DateTimeFormat(iso=ISO.DATE)
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	@DateTimeFormat(iso=ISO.DATE_TIME)
+	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy="actor")
@@ -74,11 +73,11 @@ public class Actor implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

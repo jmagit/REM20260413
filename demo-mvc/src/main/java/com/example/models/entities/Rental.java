@@ -2,7 +2,7 @@ package com.example.models.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,17 +19,14 @@ public class Rental implements Serializable {
 	@Column(name="RENTAL_ID")
 	private long rentalId;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="RENTAL_DATE")
-	private Date rentalDate;
+	private LocalDateTime rentalDate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="RETURN_DATE")
-	private Date returnDate;
+	private LocalDateTime returnDate;
 
 	//bi-directional many-to-one association to Payment
 	@OneToMany(mappedBy="rental")
@@ -61,27 +58,27 @@ public class Rental implements Serializable {
 		this.rentalId = rentalId;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public Date getRentalDate() {
+	public LocalDateTime getRentalDate() {
 		return this.rentalDate;
 	}
 
-	public void setRentalDate(Date rentalDate) {
+	public void setRentalDate(LocalDateTime rentalDate) {
 		this.rentalDate = rentalDate;
 	}
 
-	public Date getReturnDate() {
+	public LocalDateTime getReturnDate() {
 		return this.returnDate;
 	}
 
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(LocalDateTime returnDate) {
 		this.returnDate = returnDate;
 	}
 

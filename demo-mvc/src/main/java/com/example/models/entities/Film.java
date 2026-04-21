@@ -3,7 +3,7 @@ package com.example.models.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,9 +23,8 @@ public class Film implements Serializable {
 	@Lob
 	private String description;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
 	@Column(name="\"LENGTH\"")
 	private BigDecimal length;
@@ -90,11 +89,11 @@ public class Film implements Serializable {
 		this.description = description;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

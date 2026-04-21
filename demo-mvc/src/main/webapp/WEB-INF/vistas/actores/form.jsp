@@ -26,7 +26,7 @@
 	</div>
 	<div class="mb-3">
 		<sf:label path="lastUpdate" cssClass="form-label">Fecha</sf:label>
-		<sf:input type="date" path="lastUpdate" cssClass="form-control" cssErrorClass="is-invalid form-control"/>
+		<sf:input type="datetime" path="lastUpdate" cssClass="form-control" cssErrorClass="is-invalid form-control"/>
 		<sf:errors path="lastUpdate" cssClass="invalid-feedback" />
 	</div>
 	<div class="mb-3">

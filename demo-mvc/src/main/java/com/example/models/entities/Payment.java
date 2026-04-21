@@ -3,7 +3,7 @@ package com.example.models.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -21,13 +21,11 @@ public class Payment implements Serializable {
 
 	private BigDecimal amount;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="PAYMENT_DATE")
-	private Date paymentDate;
+	private LocalDateTime paymentDate;
 
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
@@ -63,19 +61,19 @@ public class Payment implements Serializable {
 		this.amount = amount;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public Date getPaymentDate() {
+	public LocalDateTime getPaymentDate() {
 		return this.paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(LocalDateTime paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 

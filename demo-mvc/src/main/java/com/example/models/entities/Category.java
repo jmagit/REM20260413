@@ -2,7 +2,7 @@ package com.example.models.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,9 +19,8 @@ public class Category implements Serializable {
 	@Column(name="CATEGORY_ID")
 	private long categoryId;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
 	private String name;
 
@@ -40,11 +39,11 @@ public class Category implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

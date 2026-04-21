@@ -2,7 +2,7 @@ package com.example.models.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -21,9 +21,8 @@ public class Customer implements Serializable {
 
 	private String active;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="CREATE_DATE")
-	private Date createDate;
+	private LocalDateTime createDate;
 
 	private String email;
 
@@ -33,9 +32,8 @@ public class Customer implements Serializable {
 	@Column(name="LAST_NAME")
 	private String lastName;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to Address
 	@ManyToOne
@@ -74,11 +72,11 @@ public class Customer implements Serializable {
 		this.active = active;
 	}
 
-	public Date getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return this.createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 
@@ -106,11 +104,11 @@ public class Customer implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

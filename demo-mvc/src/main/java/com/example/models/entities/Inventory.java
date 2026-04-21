@@ -2,7 +2,7 @@ package com.example.models.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,9 +19,8 @@ public class Inventory implements Serializable {
 	@Column(name="INVENTORY_ID")
 	private long inventoryId;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="LAST_UPDATE")
-	private Date lastUpdate;
+	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
+	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
@@ -48,11 +47,11 @@ public class Inventory implements Serializable {
 		this.inventoryId = inventoryId;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

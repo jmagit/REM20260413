@@ -1,7 +1,9 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ include file="../parts/header.jsp" %>
+
 
 <dl>
 	<dt><s:message code="entidad.form.id" /></dt>
@@ -10,6 +12,11 @@
 	<dd>${elemento.firstName}</dd>
 	<dt><s:message code="entidad.form.apellidos" /></dt>
 	<dd>${elemento.lastName}</dd>
+	<dt><s:message code="entidad.form.fecha" /></dt>
+	<dd>
+		<fmt:parseDate  value="${elemento.lastUpdate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+		<fmt:formatDate pattern = "dd/MMMM/yyyy" value = "${parsedDate}" />
+	</dd>
 </dl>
 <p>
 	<a href="/actores" class="btn btn-primary">Volver</a>

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -29,9 +29,8 @@ public class City implements Serializable {
 	@Size(min=1, max=50)
 	private String city;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="LAST_UPDATE", insertable = false, updatable = false)
-	private Date lastUpdate;
+	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to Address
 	@OneToMany(mappedBy="city")
@@ -74,11 +73,11 @@ public class City implements Serializable {
 		this.city = city;
 	}
 
-	public Date getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return this.lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
