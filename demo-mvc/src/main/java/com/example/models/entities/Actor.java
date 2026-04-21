@@ -38,7 +38,7 @@ public class Actor implements Serializable {
 	private String lastName;
 
 	@Column(name="LAST_UPDATE", insertable=false, updatable=false, nullable=false)
-	@DateTimeFormat(iso=ISO.DATE_TIME)
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private LocalDateTime lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor

@@ -1,13 +1,13 @@
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../parts/header.jsp" %>
 <dl>
 	<dt><s:message code="entidad.form.id" /></dt>
 	<dd>${elemento.cityId}</dd>
 	<dt>Nombre</dt>
 	<dd>${elemento.city}</dd>
-	<dt>Paí­s</dt>
+	<dt>Paï¿½ï¿½s</dt>
 	<dd>${elemento.country.country}</dd>
 </dl>
 <p>

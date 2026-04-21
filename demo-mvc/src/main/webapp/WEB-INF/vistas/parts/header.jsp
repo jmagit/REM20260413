@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,23 +18,23 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/"><img src="/logo.png" title="Logotipo corporativo" height="30"></a>
+			<a class="navbar-brand" href="/"><img src="/logo.png" title="<s:message code="img.title.logo" />" height="30"></a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			  </button>
 			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="/">Inicio</a>
+						<a class="nav-link" href="/"><s:message code="menu.inicio" /></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/actores">Actores</a>
+						<a class="nav-link" href="/actores"><s:message code="menu.actores" /></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/ciudades">Ciudades</a>
+						<a class="nav-link" href="/ciudades"><s:message code="menu.ciudades" /></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/ajax">Ajax</a>
+						<a class="nav-link" href="/ajax"><s:message code="menu.ajax" /></a>
 					</li>
 				</ul>
 				<div  class="d-flex me-2">
@@ -42,13 +43,13 @@
 						<a href="?lang=en" class="btn btn-primary btn-sm">EN</a>
 					</div>
 				</div>
-				<div  class="d-flex">
+				<div  class="d-flex justify-content-center align-items-center">
 					<sec:authorize access="isAnonymous()">
 						<a class="nav-link" href="${pageContext.request.contextPath}/mylogin">Log In</a>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<span class="navbar-text"><sec:authentication property="principal.username" /></span>
-						<a class="nav-link" href="${pageContext.request.contextPath}/logout">Log Out</a>
+						<a class="ms-2 nav-link" href="${pageContext.request.contextPath}/logout">Log Out</a>
 					</sec:authorize>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../parts/header.jsp" %>
 <sf:form modelAttribute="elemento" action="${pageContext.request.contextPath}/${action}">
 	<div class="mb-3">
@@ -19,7 +19,7 @@
 		<sf:errors path="city" cssClass="invalid-feedback" />
 	</div>
 	<div class="mb-3">
-		<sf:label path="countryId" cssClass="form-label">País</sf:label>
+		<sf:label path="countryId" cssClass="form-label">Paï¿½s</sf:label>
 		<sf:select path="countryId" cssClass="form-control" cssErrorClass="is-invalid form-control">
 			<sf:options items="${paises}" itemValue="countryId" itemLabel="country"/>
 		</sf:select>

@@ -1,6 +1,6 @@
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../parts/header.jsp" %>
 <table class="table table-hover table-striped table-bordered">
 	<tr>
