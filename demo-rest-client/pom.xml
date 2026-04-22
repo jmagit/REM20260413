@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo-client-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo-client-rest</name>
+	<name>demo-rest-client</name>
 	<description>Ejemplos con Spring Cliente Rest</description>
 	<url/>
 	<licenses>
