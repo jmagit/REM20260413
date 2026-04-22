@@ -12,7 +12,7 @@
 	<artifactId>demo-reactive-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo-reactive-server</name>
-	<description>Ejemplos de servidor con Spring Webflux</description>
+	<description>Ejemplos de Spring Webflux (servidor)</description>
 	<url/>
 	<licenses>
 		<license/>
